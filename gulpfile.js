@@ -5,6 +5,7 @@ var handlebars = require('gulp-handlebars');
 var defineModule = require('gulp-define-module');
 var concat = require('gulp-concat');
 var declare = require('gulp-declare');
+var bower = require('bower');
 
 gulp.task('coffee', function() {
   gulp.src('./src/*.coffee')
@@ -25,7 +26,11 @@ gulp.task('templates', function(){
 
 gulp.task("build", ["coffee", "templates"]);
 
-gulp.task('test', ["build"], function () {
+gulp.task("bower", function() {
+    bower.commands.install()
+});
+
+gulp.task('test', ["build", "bower"], function () {
   return gulp
   .src('test/runner.html')
   .pipe(mochaPhantomJS());
